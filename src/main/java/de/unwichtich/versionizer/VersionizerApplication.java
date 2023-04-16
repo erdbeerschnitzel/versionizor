@@ -1,5 +1,7 @@
 package de.unwichtich.versionizer;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,8 +28,10 @@ public class VersionizerApplication {
     @GetMapping("/versions")
     public String versions(@RequestParam(value = "service", defaultValue = "messenger") String service) {
         
-        if (retriever.getVersionHTML(service) != null) {
-            return retriever.getVersionHTML(service);
+        List sites = new ArrayList<String>();
+        
+        if (retriever.getVersionHTML(service, sites) != null) {
+            return retriever.getVersionHTML(service, sites);
         } else {
             return String.format("Currently no information for %s!", service);
         }
